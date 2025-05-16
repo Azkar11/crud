@@ -5,27 +5,31 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Users</h1>
-    <a href="/users/new">Add User</a>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Action</th>
-        </tr>
-        <% users.forEach(function(user) { %>
-        <tr>
-            <td><%= user.id %></td>
-            <td><%= user.name %></td>
-            <td><%= user.age %></td>
-            <td>
-                <form action="/users/delete/<%= user.id %>" method="POST" style="display:inline;">
-                    <button type="submit" onclick="return confirm('Delete this user?')">Delete</button>
-                </form>
-            </td>
-        </tr>
-        <% }); %>
-    </table>
+    <div class="container">
+        <h1>Users</h1>
+        <a href="/users/new" class="btn-primary">Add User</a>
+        <div class="table-responsive">
+            <table class="user-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Action</th>
+                </tr>
+                <% users.forEach(function(user) { %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.age %></td>
+                    <td>
+                        <form action="/users/delete/<%= user.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn-danger" onclick="return confirm('Delete this user?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }); %>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

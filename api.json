@@ -1,14 +1,9 @@
 {
-    "users":[
+    "users": [
         {
             "id": 1,
-            "name": "John Doe",
-            "age": 30
-            },
-            {
-            "id": 1,
-            "name": "Steve Smith",
-            "age": 33
-            }
+            "name": "Davud",
+            "age": 8
+        }
     ]
 }

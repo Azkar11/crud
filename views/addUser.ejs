@@ -5,13 +5,20 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Add User</h1>
-    <form action="/users" method="POST">
-        <label>Name: <input type="text" name="name" required></label><br><br>
-        <label>Age: <input type="number" name="age" required></label><br><br>
-        <button type="submit">Add</button>
-    </form>
-    <br>
-    <a href="/users">Back to User List</a>
+    <div class="container">
+        <h1>Add User</h1>
+        <form action="/users" method="POST" class="form-card">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <button type="submit" class="btn-primary">Add</button>
+        </form>
+        <a href="/users" class="back-link">&larr; Back to User List</a>
+    </div>
 </body>
 </html>
