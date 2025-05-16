@@ -1,3 +1,5 @@
+// This is a simple Express.js application that serves a list of users from a JSON file.
+// It allows users to add new users and delete existing ones.
 let express = require('express');
 let fs = require('fs');
 let bodyParser = require('body-parser');
@@ -17,10 +19,15 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
     res.redirect('/users');
 });
-
+// Show list of users
 app.get('/users', (req, res) => {
-    const data = JSON.parse(fs.readFileSync('api.json', 'utf-8'));
-    res.render('listUsers', { users: data.users });
+    try {
+        const data = JSON.parse(fs.readFileSync('api.json', 'utf-8'));
+        res.render('listUsers', { users: data.users });
+    } catch (error) {
+        console.error("Error reading users:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 // Show form to add user
@@ -30,27 +37,37 @@ app.get('/users/new', (req, res) => {
 
 // Add user
 app.post('/users', (req, res) => {
-    const data = JSON.parse(fs.readFileSync('api.json', 'utf-8'));
-    const users = data.users;
-    const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
-    const newUser = {
-        id: newId,
-        name: req.body.name,
-        age: parseInt(req.body.age)
-    };
-    users.push(newUser);
-    fs.writeFileSync('api.json', JSON.stringify({ users }, null, 4));
-    res.redirect('/users');
+    try {
+        const data = JSON.parse(fs.readFileSync('api.json', 'utf-8'));
+        const users = data.users;
+        const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+        const newUser = {
+            id: newId,
+            name: req.body.name,
+            age: parseInt(req.body.age)
+        };
+        users.push(newUser);
+        fs.writeFileSync('api.json', JSON.stringify({ users }, null, 4));
+        res.redirect('/users');
+    } catch (error) {
+        console.error("Error adding user:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 // Delete user
 app.post('/users/delete/:id', (req, res) => {
-    const data = JSON.parse(fs.readFileSync('api.json', 'utf-8'));
-    const users = data.users.filter(u => u.id != req.params.id);
-    fs.writeFileSync('api.json', JSON.stringify({ users }, null, 4));
-    res.redirect('/users');
+    try {
+        const data = JSON.parse(fs.readFileSync('api.json', 'utf-8'));
+        const users = data.users.filter(u => u.id != req.params.id);
+        fs.writeFileSync('api.json', JSON.stringify({ users }, null, 4));
+        res.redirect('/users');
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
-
+// Start the server
 app.listen(3000, () => { 
     console.log("Server is running on port 3000");
 });
